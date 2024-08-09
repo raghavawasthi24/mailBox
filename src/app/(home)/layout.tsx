@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidepanel from "@/components/shared/Sidepanel";
+import Navbar from "@/components/shared/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} flex`}>
         <Sidepanel />
-        <div className="h-screen overflow-auto">{children}</div>
+        <div className="w-full h-screen overflow-auto">
+          <Navbar />
+          {children}
+        </div>
       </body>
     </html>
   );

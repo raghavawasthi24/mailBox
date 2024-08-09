@@ -10,7 +10,7 @@ import { IoMdStats } from "react-icons/io";
 
 export default function Sidepanel() {
   return (
-    <div className="w-12 h-screen bg-red-300 flex flex-col items-center py-2 px-1">
+    <div className="w-12 h-screen bg-[#FAFAFA] flex flex-col items-center py-2 px-1">
       <Image src="/logo.png" alt="logo" width={26} height={26} />
 
       <div className="flex flex-col items-center gap-6 pt-12">
