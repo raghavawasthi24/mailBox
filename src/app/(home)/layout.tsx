@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidepanel from "@/components/shared/Sidepanel";
 import Navbar from "@/components/shared/Navbar";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +19,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex`}>
-        <Sidepanel />
-        <div className="w-full h-screen overflow-auto">
-          <Navbar />
-          {children}
-        </div>
+      <body className={` flex`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Sidepanel />
+          <div className="w-full h-screen overflow-hidden">
+            <Navbar />
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

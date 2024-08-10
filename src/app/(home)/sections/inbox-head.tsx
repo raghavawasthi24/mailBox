@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -16,12 +16,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function InboxHead({activeMailData, currentUser}: any) {
+export default function InboxHead({ activeMailData, currentUser }: any) {
   return (
-    <div className="w-full bg-background flex justify-between items-center p-2 border">
+    <div className="w-full h-[58px] bg-background flex justify-between items-center p-2 border">
       <div>
-        <p className='font-semibold'>{currentUser.name}</p>
-        <p className='text-xs text-muted-foreground'>{currentUser.email}</p>
+        <p className="font-semibold">{currentUser.name}</p>
+        <p className="text-xs text-muted-foreground">{currentUser.email}</p>
       </div>
       <div className="flex items-center gap-2">
         <Select defaultValue="complete">

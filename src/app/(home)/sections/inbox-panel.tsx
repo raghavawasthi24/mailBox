@@ -11,9 +11,13 @@ import React from "react";
 import { IoMdRefresh } from "react-icons/io";
 import DOMPurify from "dompurify";
 
-export default function InboxPanel({ data, setActiveMail, setCurrentUser }: any) {
+export default function InboxPanel({
+  data,
+  setActiveMail,
+  setCurrentUser,
+}: any) {
   return (
-    <div className="w-1/4 p-2 px-4 border flex flex-col gap-2 sticky">
+    <div className="w-1/4 p-2 px-4 border flex flex-col gap-2 bg-muted1">
       <div className="w-full flex justify-between items-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -28,7 +32,7 @@ export default function InboxPanel({ data, setActiveMail, setCurrentUser }: any)
         </Button>
       </div>
 
-      <Search className="bg-[#F4F6F8]" placeholder="Search" />
+      <Search className="bg-muted" placeholder="Search" />
 
       <div>
         {data &&
@@ -48,12 +52,21 @@ export default function InboxPanel({ data, setActiveMail, setCurrentUser }: any)
               <div
                 key={item.id}
                 className="py-4 flex flex-col gap-2 border-b-2 cursor-pointer"
-                onClick={() => {setActiveMail(item.threadId); setCurrentUser({name: item.fromName, email: item.fromEmail})}}
+                onClick={() => {
+                  setActiveMail(item.threadId);
+                  setCurrentUser({
+                    name: item.fromName,
+                    email: item.fromEmail,
+                  });
+                }}
               >
                 <div className="flex justify-between gap-4">
                   <div>
                     <p className="text-md">{item.fromEmail}</p>
-                    <p dangerouslySetInnerHTML={{ __html: previewText }} className="text-sm"/>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: previewText }}
+                      className="text-sm"
+                    />
                   </div>
                   <span className="text-muted-foreground text-xs">7 Mar</span>
                 </div>

@@ -14,8 +14,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DOMPurify from "dompurify";
 
-
-
 export default function InboxContent({ activeMailData, currentUser }: any) {
   const [formvalues, setFormValues] = React.useState({
     to: currentUser.email,
@@ -37,8 +35,8 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
   }
 
   return (
-    <div className="w-full flex flex-col justify-between flex-1">
-      <div className="w-full flex flex-col flex-1 overflow-auto p-4 gap-4">
+    <div className="w-full h-[calc(100vh-48px-58px)] overflow-auto flex flex-col justify-between flex-1 bg-muted4">
+      <div className="w-full flex flex-col p-4 gap-4 mb-[64px]">
         {activeMailData &&
           activeMailData.map((item: any) => {
             const sanitizedBody = DOMPurify.sanitize(item.body);
@@ -46,7 +44,7 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
             return (
               <div
                 key={item.id}
-                className="p-4 flex flex-col gap-2 cursor-pointer bg-background rounded-md"
+                className="p-4 flex flex-col gap-2 cursor-pointer bg-muted5 border rounded-lg"
               >
                 <p className="font-semibold">{item.subject}</p>
                 <p className="text-sm text-muted-foreground">{`from: ${item.fromEmail}`}</p>
@@ -60,11 +58,12 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
           })}
       </div>
 
-      <div>
-        {" "}
+      <div className="w-full absolute bottom-0 left-0 bg-muted4 z-999 p-4">
         <Dialog>
-          <DialogTrigger asChild>
-            <Button>Reply</Button>
+          <DialogTrigger asChild className="">
+            <Button className="w-fit bg-gradient-to-r from-[#4B63DD] to-[#0524BF]  background: linear-gradient(to right, #4B63DD 100%, #0524BF 99%) text-white">
+              Reply
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[725px]">
             <DialogHeader>
