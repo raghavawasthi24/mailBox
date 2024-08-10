@@ -38,6 +38,9 @@ const config = {
         muted5: {
           DEFAULT: "hsl(var(--muted-5))",
         },
+        muted6: {
+          DEFAULT: "hsl(var(--muted-6))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

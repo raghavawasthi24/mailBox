@@ -32,7 +32,7 @@ export default function InboxDetails() {
       <div className="w-full flex flex-col gap-2">
         <p className="bg-muted text-foreground w-full p-2">Lead Details</p>
         {leadDetails.map((item, index) => (
-          <div key={index} className="flex justify-between">
+          <div key={index} className="flex justify-between px-4">
             <p className="text-sm text-muted-foreground">{item.name}</p>
             <p className="text-sm font-medium">{item.value}</p>
           </div>

@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,6 +8,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,12 +27,35 @@ import { BsFillReplyFill } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function InboxContent({ activeMailData, currentUser }: any) {
-  const [formvalues, setFormValues] = React.useState({
+  const [threadId, setThreadId] = useState(null);
+  const [formValues, setFormValues] = useState({
     to: currentUser.email,
     from: "mitrajit2022@gmail.com",
     subject: "",
     body: "",
   });
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key.toLowerCase() === "r") {
+        e.preventDefault();
+        setIsDialogOpen(true);
+      }
+      if (e.ctrlKey && e.key.toLowerCase() === "d") {
+        e.preventDefault();
+        setIsDeleteDialogOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   function handleChanges(e: any) {
     setFormValues((prev) => ({
@@ -32,7 +66,13 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    console.log(formvalues);
+    console.log(formValues);
+  }
+
+  function deleteThread() {
+    // Here you would add the logic to delete the thread using the threadId
+    alert(`Thread with ID ${threadId} deleted.`);
+    setIsDeleteDialogOpen(false); // Close the dialog after deletion
   }
 
   return (
@@ -44,8 +84,13 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
 
             return (
               <div
-                key={item.id}
-                className="p-4 flex flex-col gap-2 cursor-pointer bg-muted5 border rounded-lg"
+                key={item.threadId}
+                className={`p-4 flex flex-col gap-2 cursor-pointer bg-muted5 border rounded-lg ${
+                  threadId === item.threadId
+                    ? "border-2 border-blue-500"
+                    : "border"
+                }`}
+                onClick={() => setThreadId(item.threadId)}
               >
                 <p className="font-semibold">{item.subject}</p>
                 <p className="text-sm text-muted-foreground">{`from: ${item.fromEmail}`}</p>
@@ -60,7 +105,7 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
       </div>
 
       <div className="w-full absolute bottom-0 left-0 bg-muted4 z-999 p-4">
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild className="">
             <Button className="w-fit bg-gradient-to-r from-[#4B63DD] to-[#0524BF]  background: linear-gradient(to right, #4B63DD 100%, #0524BF 99%) text-white">
               <BsFillReplyFill className="w-4 h-4 mr-2" />
@@ -80,7 +125,7 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
                   id="to"
                   className="w-full border-none outline-none focus-visible:ring-0"
                   onChange={handleChanges}
-                  value={formvalues.to}
+                  value={formValues.to}
                 />
               </div>
               <div className="flex items-center gap-2 border px-4">
@@ -91,7 +136,7 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
                   id="from"
                   className="w-full border-none outline-none focus-visible:ring-0"
                   onChange={handleChanges}
-                  value={formvalues.from}
+                  value={formValues.from}
                 />
               </div>
               <div className="flex items-center gap-2 border px-4">
@@ -102,7 +147,7 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
                   id="subject"
                   className="w-full border-none outline-none focus-visible:ring-0"
                   onChange={handleChanges}
-                  value={formvalues.subject}
+                  value={formValues.subject}
                 />
               </div>
               <div className="flex items-start gap-2 border px-4">
@@ -110,7 +155,7 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
                   id="body"
                   className="w-full border-none outline-none focus-visible:ring-0 h-72"
                   onChange={handleChanges}
-                  value={formvalues.body}
+                  value={formValues.body}
                 />
               </div>
               <DialogFooter className="w-full flex justify-start p-4">
@@ -122,6 +167,32 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
             </form>
           </DialogContent>
         </Dialog>
+
+        <AlertDialog
+          open={isDeleteDialogOpen}
+          onOpenChange={setIsDeleteDialogOpen}
+        >
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive" className="hidden">
+              Delete
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the
+                selected thread.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={deleteThread}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

@@ -72,8 +72,10 @@ export default function InboxPanel({
                 </div>
 
                 <div className="flex gap-2">
-                  <Badge className="text-[10px] font-normal">Interested</Badge>
-                  <Badge className="text-[10px] font-normal">
+                  <Badge className="font-normal text-green-600 bg-muted6">
+                    Interested
+                  </Badge>
+                  <Badge className="font-normal bg-muted6 text-foreground">
                     Campaign Name
                   </Badge>
                 </div>

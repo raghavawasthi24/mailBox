@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
 
 const Login = () => {
   const router = useRouter();
@@ -27,7 +26,7 @@ const Login = () => {
       <div className="w-full flex justify-center items-center">
         <div className="m-auto w-[460px] h-auto md:h-[312px] bg-[#111214] rounded-2xl border border-gray-700 py-6 px-10">
           <div className="w-[380px] m-auto">
-            <p className="text-xl mb-6">Create new account</p>
+            <p className="text-xl mb-6 text-center">Create new account</p>
             <div className="rounded border border-gray-500 h-12 flex justify-center items-center gap-2.5 mb-12">
               <img
                 src="https://static.vecteezy.com/system/resources/previews/013/760/951/non_2x/colourful-google-logo-in-dark-background-free-vector.jpg"
@@ -47,7 +46,7 @@ const Login = () => {
             >
               <Link href="/signup">Create an account</Link>
             </p>
-            <p className="text-base text-gray-500">
+            <p className="text-center text-gray-500">
               Already have an account?{" "}
               <span
                 className="cursor-pointer text-blue-400"
