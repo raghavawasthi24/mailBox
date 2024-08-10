@@ -34,7 +34,7 @@ const Login = () => {
                 className="bg-black rounded-full h-5 mt-0.5"
               />
               <Link
-                href="https://hiring.reachinbox.xyz/api/v1/auth/google-login?redirect_to=http://localhost:3000/home"
+                href="https://hiring.reachinbox.xyz/api/v1/auth/google-login?redirect_to=https://mail-box-delta.vercel.app/home"
                 className="text-sm text-gray-400 cursor-pointer"
               >
                 Sign Up with Google
