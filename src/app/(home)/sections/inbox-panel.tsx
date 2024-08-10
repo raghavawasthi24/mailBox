@@ -5,9 +5,7 @@ import { Select, SelectTrigger, SelectValue } from '@/components/ui/select';
 import React from 'react'
 import { IoMdRefresh } from 'react-icons/io';
 
-export default function InboxPanel({data}:any) {
-
-    console.log(data)
+export default function InboxPanel({data, setActiveMail}:any) {
   return (
     <div className="w-[378px] p-2 border flex flex-col gap-2">
       <div className="w-full flex justify-between items-center">
@@ -27,7 +25,7 @@ export default function InboxPanel({data}:any) {
 
          {
             data && data?.map((item:any) => (
-                <div key={item.id} className="p-4 flex flex-col gap-2 border-b-2 cursor-pointer">
+                <div key={item.id} className="p-4 flex flex-col gap-2 border-b-2 cursor-pointer" onClick={()=>setActiveMail(item.threadId)}>
                     <div className="flex justify-between gap-4">
                     <div className="">
                         <p>{item.fromEmail}</p>
