@@ -13,7 +13,7 @@ import DOMPurify from "dompurify";
 
 export default function InboxPanel({ data, setActiveMail, setCurrentUser }: any) {
   return (
-    <div className="w-1/4 p-2 px-4 border flex flex-col gap-2">
+    <div className="w-1/4 p-2 px-4 border flex flex-col gap-2 sticky">
       <div className="w-full flex justify-between items-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

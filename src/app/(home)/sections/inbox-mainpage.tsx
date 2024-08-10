@@ -7,7 +7,8 @@ export default function InboxMain({ activeMailData, currentUser }: any) {
   return (
     <div className="">
       <InboxHead currentUser={currentUser} />
-      <InboxContent activeMailData={activeMailData} />
+      <InboxContent activeMailData={activeMailData} currentUser={currentUser} />
+     
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import InboxMain from "./sections/inbox-mainpage";
 import InboxPanel from "./sections/inbox-panel";
+import InboxDetails from "./sections/inbox-details";
 
 export default function Home() {
 
@@ -82,15 +83,24 @@ export default function Home() {
 
   return (
     <div className="bg-[#FAFAFA] h-screen flex">
-      <InboxPanel data={data} setActiveMail={setActiveMail} setCurrentUser={setCurrentUser}/>
+      <InboxPanel
+        data={data}
+        setActiveMail={setActiveMail}
+        setCurrentUser={setCurrentUser}
+      />
 
-      {
-        activeMail ? (
-          <div className="w-3/4">
-            <InboxMain activeMailData={activeMailData} currentUser={currentUser}/>
-          </div>
-        ) : null
-      }
+      {activeMail ? (
+        <div className="w-2/4">
+          <InboxMain
+            activeMailData={activeMailData}
+            currentUser={currentUser}
+          />
+        </div>
+      ) : null}
+
+     {activeMail ? (
+        <InboxDetails />
+      ) : null}
     </div>
   );
 }

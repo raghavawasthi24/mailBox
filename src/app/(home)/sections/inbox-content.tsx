@@ -14,7 +14,28 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DOMPurify from "dompurify";
 
-export default function InboxContent({ activeMailData }: any) {
+
+
+export default function InboxContent({ activeMailData, currentUser }: any) {
+  const [formvalues, setFormValues] = React.useState({
+    to: currentUser.email,
+    from: "mitrajit2022@gmail.com",
+    subject: "",
+    body: "",
+  });
+
+  function handleChanges(e: any) {
+    setFormValues((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  }
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    console.log(formvalues);
+  }
+
   return (
     <div className="w-full flex flex-col justify-between flex-1">
       <div className="w-full flex flex-col flex-1 overflow-auto p-4 gap-4">
@@ -30,7 +51,10 @@ export default function InboxContent({ activeMailData }: any) {
                 <p className="font-semibold">{item.subject}</p>
                 <p className="text-sm text-muted-foreground">{`from: ${item.fromEmail}`}</p>
                 <p className="text-sm text-muted-foreground">{`to: ${item.toEmail}`}</p>
-                <div dangerouslySetInnerHTML={{ __html: sanitizedBody }} className="py-4 text-sm"/>
+                <div
+                  dangerouslySetInnerHTML={{ __html: sanitizedBody }}
+                  className="py-4 text-sm"
+                />
               </div>
             );
           })}
@@ -46,14 +70,16 @@ export default function InboxContent({ activeMailData }: any) {
             <DialogHeader>
               <DialogTitle className=" p-4">Reply</DialogTitle>
             </DialogHeader>
-            <div className="flex flex-col gap-0">
+            <form className="flex flex-col gap-0" onSubmit={handleSubmit}>
               <div className="flex items-center gap-2 border px-4">
                 <Label htmlFor="name" className="text-right ">
                   To
                 </Label>
                 <Input
-                  id="name"
+                  id="to"
                   className="w-full border-none outline-none focus-visible:ring-0"
+                  onChange={handleChanges}
+                  value={formvalues.to}
                 />
               </div>
               <div className="flex items-center gap-2 border px-4">
@@ -61,8 +87,10 @@ export default function InboxContent({ activeMailData }: any) {
                   From
                 </Label>
                 <Input
-                  id="username"
+                  id="from"
                   className="w-full border-none outline-none focus-visible:ring-0"
+                  onChange={handleChanges}
+                  value={formvalues.from}
                 />
               </div>
               <div className="flex items-center gap-2 border px-4">
@@ -70,20 +98,24 @@ export default function InboxContent({ activeMailData }: any) {
                   Subject
                 </Label>
                 <Input
-                  id="username"
+                  id="subject"
                   className="w-full border-none outline-none focus-visible:ring-0"
+                  onChange={handleChanges}
+                  value={formvalues.subject}
                 />
               </div>
               <div className="flex items-start gap-2 border px-4">
                 <Textarea
-                  id="username"
+                  id="body"
                   className="w-full border-none outline-none focus-visible:ring-0 h-72"
+                  onChange={handleChanges}
+                  value={formvalues.body}
                 />
               </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Save changes</Button>
-            </DialogFooter>
+              <DialogFooter>
+                <Button type="submit">Send</Button>
+              </DialogFooter>
+            </form>
           </DialogContent>
         </Dialog>
       </div>
