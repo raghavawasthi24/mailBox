@@ -3,7 +3,6 @@ import React from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -13,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DOMPurify from "dompurify";
+import { BsFillReplyFill } from "react-icons/bs";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function InboxContent({ activeMailData, currentUser }: any) {
   const [formvalues, setFormValues] = React.useState({
@@ -62,6 +63,7 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
         <Dialog>
           <DialogTrigger asChild className="">
             <Button className="w-fit bg-gradient-to-r from-[#4B63DD] to-[#0524BF]  background: linear-gradient(to right, #4B63DD 100%, #0524BF 99%) text-white">
+              <BsFillReplyFill className="w-4 h-4 mr-2" />
               Reply
             </Button>
           </DialogTrigger>
@@ -111,8 +113,11 @@ export default function InboxContent({ activeMailData, currentUser }: any) {
                   value={formvalues.body}
                 />
               </div>
-              <DialogFooter>
-                <Button type="submit">Send</Button>
+              <DialogFooter className="w-full flex justify-start p-4">
+                <Button className="self-start w-fit bg-gradient-to-r from-[#4B63DD] to-[#0524BF]  background: linear-gradient(to right, #4B63DD 100%, #0524BF 99%) text-white">
+                  Send
+                  <IoMdArrowDropdown className="w-4 h-4 ml-2" />
+                </Button>
               </DialogFooter>
             </form>
           </DialogContent>
