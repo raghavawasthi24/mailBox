@@ -12,26 +12,28 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import DOMPurify from "dompurify";
 
 export default function InboxContent({ activeMailData }: any) {
   return (
     <div className="w-full flex flex-col justify-between flex-1">
-      <div className="w-full flex flex-col flex-1 overflow-auto">
+      <div className="w-full flex flex-col flex-1 overflow-auto p-4 gap-4">
         {activeMailData &&
-          activeMailData?.map((item: any) => (
-            <div
-              key={item.id}
-              className="p-4 flex flex-col gap-2 border-b-2 cursor-pointer"
-            >
-              <div className="flex justify-between gap-4">
-                <div className="">
-                  <p>{item.fromEmail}</p>
-                  <p>{item.body}</p>
-                </div>
-                <span>7 Mar</span>
+          activeMailData.map((item: any) => {
+            const sanitizedBody = DOMPurify.sanitize(item.body);
+
+            return (
+              <div
+                key={item.id}
+                className="p-4 flex flex-col gap-2 cursor-pointer bg-background rounded-md"
+              >
+                <p className="font-semibold">{item.subject}</p>
+                <p className="text-sm text-muted-foreground">{`from: ${item.fromEmail}`}</p>
+                <p className="text-sm text-muted-foreground">{`to: ${item.toEmail}`}</p>
+                <div dangerouslySetInnerHTML={{ __html: sanitizedBody }} className="py-4 text-sm"/>
               </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
 
       <div>

@@ -8,6 +8,7 @@ export default function Home() {
   const [data, setData] = useState(null);
   const [activeMail, setActiveMail] = useState(null);
   const [activeMailData, setActiveMailData] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
       async function fetchData() {
@@ -81,12 +82,12 @@ export default function Home() {
 
   return (
     <div className="bg-[#FAFAFA] h-screen flex">
-      <InboxPanel data={data} setActiveMail={setActiveMail}/>
+      <InboxPanel data={data} setActiveMail={setActiveMail} setCurrentUser={setCurrentUser}/>
 
       {
         activeMail ? (
-          <div className="w-full">
-            <InboxMain activeMailData={activeMailData}/>
+          <div className="w-3/4">
+            <InboxMain activeMailData={activeMailData} currentUser={currentUser}/>
           </div>
         ) : null
       }
