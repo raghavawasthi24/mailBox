@@ -1,26 +1,48 @@
-import { Search } from "@/components/shared/Search";
-import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FaChevronCircleRight } from "react-icons/fa";
-import { IoMdRefresh } from "react-icons/io";
+"use client";
+import { useEffect, useState } from "react";
+import InboxMain from "./sections/inbox-mainpage";
+import InboxPanel from "./sections/inbox-panel";
 
 export default function Home() {
+
+  const [data, setData] = useState(null);
+
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const response = await fetch(
+            "https://hiring.reachinbox.xyz/api/v1/onebox/list",
+            {
+              method: "GET",
+              headers: {
+                Authorization:
+                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoicmFnaGF2YXdhc3RoaTI0MEBnbWFpbC5jb20iLCJpZCI6NDUzLCJmaXJzdE5hbWUiOiJSYWdoYXYiLCJsYXN0TmFtZSI6IkF3YXN0aGkifSwiaWF0IjoxNzIzMjU1ODQyLCJleHAiOjE3NTQ3OTE4NDJ9.UDb4_4hVsX_3Q0j0mbRRsxMYmSvwCa5hOdma5MZ7RiI", 
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          console.log(result.data);
+
+          setData(result.data);
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+        }
+      }
+
+      fetchData();
+    }, []);
+
   return (
     <div className="bg-[#FAFAFA] h-screen flex">
-      <div className="w-72 p-2 border flex flex-col gap-2">
-        <div className="w-full flex justify-between items-center">
-          <Select>
-            <SelectTrigger className="w-fit focus:ring-0 border-none bg-transparent">
-              <SelectValue placeholder="All Inbox(s)" className="text-blue" />
-            </SelectTrigger>
-          </Select>
-          <Button variant="outline" size="icon" className="bg-transparent">
-            <IoMdRefresh className="h-4 w-4" />
-          </Button>
-        </div>
+      <InboxPanel data={data} />
 
-        <Search className="bg-[#F4F6F8]" placeholder="Search" />
-      </div>
+      <InboxMain />
     </div>
   );
 }
